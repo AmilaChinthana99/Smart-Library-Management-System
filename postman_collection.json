@@ -1,0 +1,129 @@
+{
+  "info": {
+    "name": "Smart Library Management System API",
+    "description": "Comprehensive REST API Collection for Smart Library System including Auth, Books, Transactions, Reservations, Users, Settings, and Reports.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"student123\",\n  \"phone\": \"+1 (555) 019-1000\",\n  \"address\": \"10 Campus Drive\"\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/auth/register", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "auth", "register"] }
+          }
+        },
+        {
+          "name": "Login (Admin/Librarian/Member)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@library.com\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/auth/login", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "auth", "login"] }
+          }
+        },
+        {
+          "name": "Get Current User Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "url": { "raw": "http://localhost:5000/api/auth/me", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "auth", "me"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Book Catalog",
+      "item": [
+        {
+          "name": "Get All Books (Search, Filter, Sort, Paginate)",
+          "request": {
+            "method": "GET",
+            "url": { "raw": "http://localhost:5000/api/books?search=clean&page=1&limit=10", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "books"], "query": [{ "key": "search", "value": "clean" }] }
+          }
+        },
+        {
+          "name": "Create Book (Librarian/Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Designing Data-Intensive Applications\",\n  \"author\": \"Martin Kleppmann\",\n  \"ISBN\": \"978-1449373320\",\n  \"category\": \"CATEGORY_ID_HERE\",\n  \"publisher\": \"O'Reilly Media\",\n  \"year\": 2017,\n  \"totalCopies\": 5,\n  \"availableCopies\": 5,\n  \"shelfLocation\": \"CS-104\"\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/books", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "books"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactions (Borrowing & Returning)",
+      "item": [
+        {
+          "name": "Issue Book to Member",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"bookId\": \"BOOK_ID_HERE\",\n  \"userId\": \"MEMBER_USER_ID_HERE\",\n  \"customLoanDays\": 14\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/transactions/issue", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "transactions", "issue"] }
+          }
+        },
+        {
+          "name": "Process Book Return",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"transactionId\": \"TRANSACTION_ID_HERE\"\n}"
+            },
+            "url": { "raw": "http://localhost:5000/api/transactions/return", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "transactions", "return"] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reports & Analytics",
+      "item": [
+        {
+          "name": "Dashboard Metrics & Charts",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" }
+            ],
+            "url": { "raw": "http://localhost:5000/api/reports/dashboard", "protocol": "http", "host": ["localhost"], "port": "5000", "path": ["api", "reports", "dashboard"] }
+          }
+        }
+      ]
+    }
+  ]
+}
